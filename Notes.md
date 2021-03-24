@@ -12,6 +12,8 @@
 
 ## References
 
+### Good reads
+
 - [Game timers: Issues and solutions.](https://www.fabiensanglard.net/timer_and_framerate/index.php)
 - [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/)
 - [Game loop](http://gameprogrammingpatterns.com/game-loop.html) from [Game Programming Patterns books](http://gameprogrammingpatterns.com/)
@@ -21,3 +23,7 @@
 
 [moz-dhres]: https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp
 [moz-now]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+
+### Libraries
+
+- [node-microtime](https://github.com/wadey/node-microtime) (benchmark [gist](https://gist.github.com/fengmk2/4345606))
