@@ -14,6 +14,7 @@
 
 ### Good reads
 
+- [High Resolution Time](https://www.w3.org/TR/hr-time) from [w3.org](https://www.w3.org)
 - [Game timers: Issues and solutions.](https://www.fabiensanglard.net/timer_and_framerate/index.php)
 - [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/)
 - [Game loop](http://gameprogrammingpatterns.com/game-loop.html) from [Game Programming Patterns books](http://gameprogrammingpatterns.com/)
