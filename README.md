@@ -11,7 +11,9 @@ GameLoop is a universal game loop for games written in modern JavaScript.
 ## Usage
 
 ```
-const update = () => { /* game update code */ }
-const gameLoop = new GameLoop(update)
-game
+const update = () => { /* render code */ }
+const fixedUpdate = () => { /* physics code */ }
+
+const gameLoop = new GameLoop({ update, updateRate,   })
+gameLoop.start()
 ```
