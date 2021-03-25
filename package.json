@@ -9,7 +9,7 @@
   "scripts": {
     "bc:date-now": "node ./benchmark/date-now",
     "bc:hrtime": "node ./benchmark/hrtime",
-    "bc:hrtime-bigint": "node ./benchmark/hrtime-bigint",    
+    "bc:hrtime-bigint": "node ./benchmark/hrtime-bigint",
     "benchmark": "yarn bc:date-now && yarn bc:hrtime && yarn bc:hrtime-bigint"
   },
   "repository": {
@@ -17,5 +17,11 @@
     "url": "gitrep"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "eslint": "^7.22.0",
+    "typescript": "^4.2.3"
+  }
 }
