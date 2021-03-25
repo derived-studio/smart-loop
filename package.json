@@ -7,6 +7,8 @@
     "node": ">=10.7.0"
   },
   "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "start": "ts-node",
     "bc:date-now": "node ./benchmark/date-now",
     "bc:hrtime": "node ./benchmark/hrtime",
     "bc:hrtime-bigint": "node ./benchmark/hrtime-bigint",
@@ -23,6 +25,7 @@
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
     "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
