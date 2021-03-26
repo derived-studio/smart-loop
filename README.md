@@ -1,9 +1,11 @@
 # GameLoop
 
-GameLoop is a universal game loop for games written in modern JavaScript.
+GameLoop is a universal game loop for games written for modern JavaScript.
 
 ## Features
 
+- Written in TypeScript (comes with definitions)
+- Created using ES6 generators
 - Works in both browser and node environments
 - Uses `window.requestAnimationFrame()` when run in a browser
 - Uses `setImmediate()` and `setInterval` when run in Node
@@ -14,13 +16,11 @@ GameLoop is a universal game loop for games written in modern JavaScript.
 const update = () => { /* render code */ }
 const fixedUpdate = () => { /* physics code */ }
 
-const gameLoop = new GameLoop({ update, updateRate, rate: 60, fixedRate: 30  })
+const gameLoop = createGameLoop({ update, updateRate, rate: 60, fixedRate: 30  })
 
 gameLoop.start()
 
-gameLoop.pause()
 
-gameLoop.resume()
-
-gameLoop.stop()
+setTimeout(() => gameLoop.pause(), 2000)
+setTimeout(() => gameLoop.resume(), 3000)
 ```
