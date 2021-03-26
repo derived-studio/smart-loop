@@ -8,7 +8,7 @@ const update = (stats: IGameLoopStats) => {
   console.log('ut', ++t, stats)
 }
 
-const gameLoop = new GameLoop({ duration: 4000, rate: 5, update })
+const gameLoop = new GameLoop({ duration: 4000, rate: 100, update })
 gameLoop.start()
 
 setTimeout(() => gameLoop.pause(), 2000)
