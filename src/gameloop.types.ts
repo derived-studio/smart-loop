@@ -29,7 +29,7 @@ export interface IGameLoopStats {
   lastFixedUpdate: number
   running: boolean
   paused: boolean
-  duration?: number
+  duration: number
 }
 
 export interface IGameLoop {

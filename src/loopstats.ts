@@ -11,6 +11,7 @@ export class GameLoopStats implements IGameLoopStats {
   lastFixedUpdate = 0
   running = false
   paused = false
+  duration = 0
 
   constructor(stats?: Partial<IGameLoopStats>) {
     for (const [key, value] of Object.entries(stats)) {

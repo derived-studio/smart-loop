@@ -24,13 +24,15 @@ export class GameLoop implements IGameLoop {
   }
 
   private async *generateLoop(stats: IGameLoopStats) {
-    const { duration, rate } = stats
+    const rStat = new GameLoopStats(stats)
+    const { rate, duration } = rStat
 
     // todo: validate rate and fixed rate are not 0
     const frameTime = 1000 / rate
-    const startTime = await nextDrawFrame()
-    let updateTime = startTime
 
+    const startTime = await nextDrawFrame()
+
+    let updateTime = startTime
     while (!duration || updateTime - startTime < duration) {
       let deltaTime = 0
 
@@ -42,8 +44,11 @@ export class GameLoop implements IGameLoop {
         updateTime += stepDelta
       }
 
+      rStat.updates++
+
       yield {
         ...stats,
+        updates: rStat.updates,
         deltaTime,
         gameTime: updateTime - startTime
       }
