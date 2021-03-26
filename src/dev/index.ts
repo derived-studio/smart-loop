@@ -1,12 +1,14 @@
-import { GameLoopStats } from '../gameloop.types'
+import { IGameLoopStats } from '../gameloop.types'
 import { GameLoop } from '../gameloop'
 
+const ignore = false
 let t = 0
-const update = (stats: GameLoopStats) => {
+const update = (stats: IGameLoopStats) => {
+  if (ignore) return
   console.log('ut', ++t, stats)
 }
 
-const gameLoop = new GameLoop({ duration: 4000, rate: 10, update })
+const gameLoop = new GameLoop({ duration: 4000, rate: 5, update })
 gameLoop.start()
 
 setTimeout(() => gameLoop.pause(), 2000)

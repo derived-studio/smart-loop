@@ -1,9 +1,9 @@
 export type GameLoopGeneratorProps = {
-  duration?: number,
+  duration?: number
   rate: number
 }
 
-export type UpdateFunction = (stats: Readonly<GameLoopStats>) => void
+export type UpdateFunction = (stats: Readonly<IGameLoopStats>) => void
 
 export type GameLoopConstructorOptions = {
   update?: UpdateFunction
@@ -14,30 +14,29 @@ export type GameLoopConstructorOptions = {
 }
 
 export type GeneratorYield = {
-  gameTime: number,
+  gameTime: number
   deltaTime: number
 }
 
-export type GameLoopStats = {
+export interface IGameLoopStats {
   created: number
   gameTime: number
   updates: number
   rate: number
-  fixedUpdates: number  
+  fixedUpdates: number
   fixedRate: number
-  lastUpdate: number  
+  lastUpdate: number
   lastFixedUpdate: number
   running: boolean
   paused: boolean
   duration?: number
 }
 
-
-export interface IGameLoop { 
+export interface IGameLoop {
   pause: () => void
   resume: () => void
   restart: () => void
   start: () => void
   stop: () => void
-  readonly stats: GameLoopStats
+  readonly stats: IGameLoopStats
 }

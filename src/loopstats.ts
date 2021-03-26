@@ -1,20 +1,20 @@
-import { GameLoopStats } from './gameloop.types'
+import { IGameLoopStats } from './gameloop.types'
 
-export function createLoopStats(partialStats: Partial<GameLoopStats>, opts: { freeze: true }): GameLoopStats {
-  const { freeze: lock = false } = opts
-  const stats = {
-    created: Date.now(),
-    gameTime: 0,
-    updates: 0,
-    rate: 0,
-    fixedUpdates: 0,
-    fixedRate: 0,
-    lastUpdate: 0,
-    lastFixedUpdate: 0,
-    running: false,
-    paused: false,
-    ...partialStats
+export class GameLoopStats implements IGameLoopStats {
+  created = Date.now()
+  gameTime = 0
+  updates = 0
+  rate = 60
+  fixedUpdates = 0
+  fixedRate = 50
+  lastUpdate = 0
+  lastFixedUpdate = 0
+  running = false
+  paused = false
+
+  constructor(stats?: Partial<IGameLoopStats>) {
+    for (const [key, value] of Object.entries(stats)) {
+      this[key] = value
+    }
   }
-
-  return lock ? stats : Object.freeze(stats)
 }

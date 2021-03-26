@@ -1,12 +1,6 @@
 import { nextDrawFrame } from './frames'
-import {
-  IGameLoop,
-  GameLoopStats,
-  GameLoopGeneratorProps,
-  GeneratorYield,
-  GameLoopConstructorOptions,
-  UpdateFunction
-} from './gameloop.types'
+import { IGameLoop, IGameLoopStats, GeneratorYield, GameLoopConstructorOptions, UpdateFunction } from './gameloop.types'
+import { GameLoopStats } from './loopstats'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {}
@@ -14,9 +8,9 @@ const noop = () => {}
 export class GameLoop implements IGameLoop {
   private _loop: AsyncGenerator<GeneratorYield, void, unknown> | null
 
-  private _stats: GameLoopStats
-  public get stats(): GameLoopStats {
-    return Object.freeze(this.createStats(this._stats))
+  private _stats: IGameLoopStats
+  public get stats(): IGameLoopStats {
+    return this._stats
   }
 
   private update: UpdateFunction
@@ -24,30 +18,13 @@ export class GameLoop implements IGameLoop {
 
   constructor(props: GameLoopConstructorOptions) {
     const { update = noop, fixedUpdate = noop, rate, fixedRate, duration } = props
-    this._stats = this.createStats({ rate, fixedRate, duration })
+    this._stats = new GameLoopStats({ rate, fixedRate, duration })
     this.update = update
     this.fixedUpdate = fixedUpdate
-    this.createIt()
   }
 
-  createStats(stats: Partial<GameLoopStats> = {}): GameLoopStats {
-    return {
-      created: Date.now(),
-      gameTime: 0,
-      updates: 0,
-      rate: 60,
-      fixedUpdates: 0,
-      fixedRate: 50,
-      lastUpdate: 0,
-      lastFixedUpdate: 0,
-      running: false,
-      paused: false,
-      ...stats
-    }
-  }
-
-  private async *generateLoop(props: GameLoopGeneratorProps) {
-    const { duration, rate } = props
+  private async *generateLoop(stats: IGameLoopStats) {
+    const { duration, rate } = stats
 
     // todo: validate rate and fixed rate are not 0
     const frameTime = 1000 / rate
@@ -64,15 +41,18 @@ export class GameLoop implements IGameLoop {
         deltaTime += stepDelta
         updateTime += stepDelta
       }
+
       yield {
+        ...stats,
         deltaTime,
         gameTime: updateTime - startTime
       }
     }
   }
 
-  private createIt() {
-    this._loop = this.generateLoop(this.createStats())
+  private clearIt() {
+    const { fixedRate, rate, duration } = this._stats
+    this._stats = new GameLoopStats({ fixedRate, rate, duration })
   }
 
   private async runIt() {
@@ -85,7 +65,8 @@ export class GameLoop implements IGameLoop {
     if (!this._loop || !this._stats.running) {
       return
     }
-    this.update({ ...this.stats, ...value })
+    this._stats = { ...this.stats, ...value }
+    this.update(Object.freeze({ ...this.stats, ...value }))
 
     if (!done) {
       await this.runIt()
@@ -93,9 +74,10 @@ export class GameLoop implements IGameLoop {
   }
 
   public start(): void {
-    if (!this._loop) {
+    if (this._loop) {
       return
     }
+    this._loop = this.generateLoop(this._stats)
     this.runIt()
   }
 
@@ -113,7 +95,7 @@ export class GameLoop implements IGameLoop {
   }
 
   public restart(): void {
-    this.createIt()
+    this.clearIt()
     this.runIt()
   }
 }
