@@ -1,14 +1,15 @@
 import { isBrowser, isNodeJS } from './environment'
 
-export function getHRTime() {
+export function getHRTime(): number {
   try {
     if (isBrowser) {
       return performance.now()
     }
     if (isNodeJS) {
-      return process.hrtime()
+      const time = process.hrtime()
+      return time[0] * 1e9 + time[1]
     }
-  } finally {
+  } catch {
     return Date.now()
   }
 }

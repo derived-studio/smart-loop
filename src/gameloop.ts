@@ -1,138 +1,119 @@
-function delay():Promise<number> {
-  return new Promise((resolve) => {
-    console.log('- wait frame')
-    requestAnimationFrame(resolve)
-  })
-}
+import { nextDrawFrame } from './frames'
+import {
+  IGameLoop,
+  GameLoopStats,
+  GameLoopGeneratorProps,
+  GeneratorYield,
+  GameLoopConstructorOptions,
+  UpdateFunction
+} from './gameloop.types'
 
-const ms2s = 1e3
-export type GameLoopGeneratorProps = {
-  gameTime: number,
-  rate: number
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {}
 
-export type UpdateProps = {
-  deltaTime: number
-  gameTime: number
-}
-// export type GameLoopGenerator = AsyncGenerator<number, number, unknown>
+export class GameLoop implements IGameLoop {
+  private _loop: AsyncGenerator<GeneratorYield, void, unknown> | null
 
-async function* generateGameLoop(props: GameLoopGeneratorProps) {  
-  const { gameTime, rate } = props
-  const frameTime = 1000 / rate
-  console.log('>1')
-  const startTime = await delay()
-  let updateTime = startTime
-  console.log('>2')
-
-  while (updateTime - startTime < gameTime) {
-    let deltaTime = 0
-    console.log(updateTime - startTime, '<', gameTime, updateTime - startTime < gameTime)
-    // console.log('============================')
-    // console.log('>> startTime', startTime)
-    // console.log('>> loopTime', loopTime)
-    // console.log('>> deltaTime', deltaTime)
-
-    while (deltaTime < frameTime) {
-      const stepTime = await delay()
-      const stepDelta = stepTime - updateTime
-      deltaTime += stepDelta
-      updateTime += stepDelta
-
-      // console.log('--------------------------')
-      // console.log('>> deltaTime', deltaTime)
-      // console.log('>> stepDelta', stepDelta)
-      // console.log('>> stepTime', stepTime)
-      // console.log('>> loopTime', loopTime)
-    }
-    yield { deltaTime, gameTime: updateTime - startTime } as UpdateProps
-  }  
-}
-
-
-export interface IGameLoop { 
-  pause: () => void
-  resume: () => void
-  restart: () => void
-  start: () => void
-  stop: () => void
-}
-
-
-function createGameLoop(props: {
-  update: (props: UpdateProps) => void,
-  gameTime: number,
-  rate: number
-}):IGameLoop {
-  console.log('>000')
-  const { update, gameTime, rate } = props
-  let running = false
-  let loop: AsyncGenerator<UpdateProps, void, unknown> | null
-  console.log('>0001')
-
-  const start = async () => {
-    console.log('>0002 sss')
-    loop = generateGameLoop({ gameTime, rate })
-    
-    await runIt()
+  private _stats: GameLoopStats
+  public get stats(): GameLoopStats {
+    return Object.freeze(this.createStats(this._stats))
   }
 
-  const runIt = async () => {
-    console.log('>0003 sss', loop === null, loop === undefined)
-    if (loop === null) {
+  private update: UpdateFunction
+  private fixedUpdate: UpdateFunction
 
-      console.log('>0003 sss xxxx', loop)
+  constructor(props: GameLoopConstructorOptions) {
+    const { update = noop, fixedUpdate = noop, rate, fixedRate, duration } = props
+    this._stats = this.createStats({ rate, fixedRate, duration })
+    this.update = update
+    this.fixedUpdate = fixedUpdate
+    this.createIt()
+  }
+
+  createStats(stats: Partial<GameLoopStats> = {}): GameLoopStats {
+    return {
+      created: Date.now(),
+      gameTime: 0,
+      updates: 0,
+      rate: 60,
+      fixedUpdates: 0,
+      fixedRate: 50,
+      lastUpdate: 0,
+      lastFixedUpdate: 0,
+      running: false,
+      paused: false,
+      ...stats
+    }
+  }
+
+  private async *generateLoop(props: GameLoopGeneratorProps) {
+    const { duration, rate } = props
+
+    // todo: validate rate and fixed rate are not 0
+    const frameTime = 1000 / rate
+    const startTime = await nextDrawFrame()
+    let updateTime = startTime
+
+    while (!duration || updateTime - startTime < duration) {
+      let deltaTime = 0
+
+      while (deltaTime < frameTime) {
+        const stepTime = await nextDrawFrame()
+        const stepDelta = stepTime - updateTime
+
+        deltaTime += stepDelta
+        updateTime += stepDelta
+      }
+      yield {
+        deltaTime,
+        gameTime: updateTime - startTime
+      }
+    }
+  }
+
+  private createIt() {
+    this._loop = this.generateLoop(this.createStats())
+  }
+
+  private async runIt() {
+    if (!this._loop) {
       return
     }
+    this._stats.running = true
 
-    console.log('>0004 sss')
-    running = true
-    const { done, value } = await loop.next()
-    if (!loop || !running) {
+    const { done, value } = await this._loop.next()
+    if (!this._loop || !this._stats.running) {
       return
     }
-
-    update(value as UpdateProps)
+    this.update({ ...this.stats, ...value })
 
     if (!done) {
-      await runIt()
+      await this.runIt()
     }
   }
 
-  const pause = () => {
-    running = false
-  }
-
-  const resume = () => {
-    if (loop && !running) {
-      runIt()
+  public start(): void {
+    if (!this._loop) {
+      return
     }
+    this.runIt()
   }
 
-  const stop = () => {
-    loop = null
+  public stop(): void {
+    this._loop = null
   }
 
-  const restart = () => {
-    stop()
-    start()
+  public pause(): void {
+    this._stats.running = false
   }
 
-  return {
-    start,
-    stop,
-    pause,
-    resume,
-    restart
+  public resume(): void {
+    const { running } = this.stats
+    this._loop && !running && this.runIt()
+  }
+
+  public restart(): void {
+    this.createIt()
+    this.runIt()
   }
 }
-
-let t = 0
-const update = (d: UpdateProps) => console.log('ut', ++t, d)
-const gameLoop = createGameLoop({ gameTime: 5000, rate: 10, update })
-gameLoop.start()
-
-setTimeout(() => gameLoop.pause(), 2000)
-setTimeout(() => gameLoop.resume(), 3000)
-
-console.log('starting....')

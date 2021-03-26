@@ -7,7 +7,10 @@ type UniversalProcess = NodeJS.Process & {
   type: string
 }
 
-export const isNodeJS = typeof process === "object" && process + "" === "[object process]" && !process.versions.nw &&
-  !(process.versions.electron && (process as UniversalProcess).type && (process as UniversalProcess).type !== "browser")
+export const isNodeJS =
+  typeof process === 'object' &&
+  process + '' === '[object process]' &&
+  !process.versions.nw &&
+  !(process.versions.electron && (process as UniversalProcess).type && (process as UniversalProcess).type !== 'browser')
 
 export const isBrowser = !isNodeJS
