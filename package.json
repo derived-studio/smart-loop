@@ -7,7 +7,7 @@
     "node": ">=10.7.0"
   },
   "scripts": {
-    "compile": "tsc -p tsconfig.json",
+    "compile": "tsc --p tsconfig.json",
     "start": "ts-node",
     "bc:date-now": "node ./benchmark/date-now",
     "bc:hrtime": "node ./benchmark/hrtime",
@@ -26,6 +26,9 @@
     "eslint": "^7.22.0",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
