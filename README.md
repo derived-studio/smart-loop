@@ -24,3 +24,7 @@ gameLoop.start()
 setTimeout(() => gameLoop.pause(), 2000)
 setTimeout(() => gameLoop.resume(), 3000)
 ```
+
+## Todo
+
+- use https://swc.rs/ for ts compilation
