@@ -1,26 +1,31 @@
 {
   "basePath": "./src/",
-  "compileOnSave": true,
+  "strict": true,
   "compilerOptions": {
-      "module": "none",
-      "target": "ES2018",
-      "noImplicitAny": true,
-      "strictNullChecks": true,
-      "allowJs": true,
-      "noEmit": true,
-      "alwaysStrict": true,
-      "preserveConstEnums": true,
-      "sourceMap": true,
-      "outDir": "dist",
-      "moduleResolution": "Node",
-      "declaration": false,
-      "lib": [ "dom", "es6", "es2018" ]
+    "declaration": true,
+    "noImplicitReturns": false,
+    "allowJs": false,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "sourceMap": true,
+    "maxNodeModuleJsDepth": 0,
+
+    "jsx": "react",
+    "module": "es6",
+    "moduleResolution": "node",
+
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es6",
+    "outDir": "dist",
+    "lib": ["dom", "es6", "es2018"]
   },
-  "include": [
-      "./src/*.ts"
-  ],
-  "exclude": [
-      "node_modules",
-      "**/*.spec.ts"
-  ]
+
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "global.d.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
