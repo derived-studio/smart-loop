@@ -104,33 +104,49 @@ export class GameLoop implements IGameLoop {
       }
     }
   }
+
   private async *generateUpdateLoop() {
-    const { rate, duration } = this
-    const renderFrameTime = rate > 0 ? 1000 / rate : 0
+    const { rate, duration, fixedRate } = this
+    const updateFrameTime = rate > 0 ? 1000 / rate : 0
+    const fixedFrameTime = fixedRate > 0 ? 1000 / rate : 0
     const startTime = getHRTime()
 
+    let frame = 0
+    let fixedFrame = 0
     let totalTime = 0
     let updateTime = startTime
-    let frame = 0
-
+    let deltaTime = 0
+    let fixedDeltaTime = 0
     while (!duration || updateTime - startTime < duration) {
-      let deltaTime = 0
+      const frameTime = await nextUpdateFrame()
+      const frameDelta = frameTime - updateTime
 
-      while (deltaTime < renderFrameTime) {
-        const frameTime = await nextUpdateFrame()
-        const frameDelta = frameTime - updateTime
+      updateTime = frameTime
+      totalTime += frameDelta
+      deltaTime += frameDelta
+      fixedDeltaTime += frameDelta
 
-        updateTime = frameTime
-        totalTime += frameDelta
-        deltaTime += frameDelta
+      if (fixedDeltaTime > fixedFrameTime) {
+        fixedFrame += 1
+        fixedDeltaTime = 0
+        yield {
+          frame: fixedFrame,
+          deltaTime: fixedFrameTime,
+          totalTime,
+          updateTime,
+          fixed: true
+        }
       }
 
-      frame += 1
-      yield {
-        frame,
-        deltaTime,
-        totalTime,
-        updateTime
+      if (deltaTime > updateFrameTime) {
+        frame += 1
+        deltaTime = 0
+        yield {
+          frame,
+          deltaTime,
+          totalTime,
+          updateTime
+        }
       }
     }
   }
@@ -164,8 +180,6 @@ export class GameLoop implements IGameLoop {
 
     const updateFn = value.fixed ? fixedUpdate : update
     updateFn(value as LoopUpdateProps)
-
-    await nextUpdateFrame()
     this.runLoop(loop, update, fixedUpdate)
   }
 }
