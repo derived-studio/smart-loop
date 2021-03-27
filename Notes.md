@@ -1,5 +1,10 @@
 ## Methods
 
+<!-- Shared links --->
+
+[moz-dhres]: https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp
+[moz-now]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+
 <small>
 
 | Method                             | Type                  | Format    | Precision                                 | Docs              |
@@ -20,10 +25,10 @@
 - [Game loop](http://gameprogrammingpatterns.com/game-loop.html) from [Game Programming Patterns books](http://gameprogrammingpatterns.com/)
 - [A Modern C++ Game Loop Template (MIT)](https://www.reddit.com/r/gamedev/comments/41v2td/a_modern_c_game_loop_template_mit/) on Reddit
 
-<!-- Shared links --->
+### GDC Talks
 
-[moz-dhres]: https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp
-[moz-now]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+- [GDC - Networking for Physics](https://www.youtube.com/watch?v=Z9X4lysFr64) by Glenn Fiedler
+- [8 Frames in 16ms: Rollback Networking in Mortal Kombat and Injustice 2](https://www.youtube.com/watch?v=7jb0FOcImdg&t=1082s&ab_channel=GDC) by Michael Stallone
 
 ### Libraries
 
