@@ -8,6 +8,7 @@
   },
   "scripts": {
     "compile": "tsc --p tsconfig.json",
+    "dev:node": "yarn ts-node src/dev/index.ts",
     "dev": "webpack serve --config ./webpack.dev.js --progress --profile",
     "bc:date-now": "node ./benchmark/date-now",
     "bc:hrtime": "node ./benchmark/hrtime",
