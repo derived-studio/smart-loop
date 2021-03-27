@@ -1,7 +1,9 @@
+import { getHRTime } from './time'
+
 export function nextUpdateFrame(timeout?: number): Promise<number> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(this.getHRTime())
+      resolve(getHRTime())
     }, timeout)
   })
 }
