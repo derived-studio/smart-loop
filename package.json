@@ -1,7 +1,7 @@
 {
-  "name": "gameloop",
+  "name": "smart-loop",
   "version": "0.1.0",
-  "description": "Universal game loop.",
+  "description": "Zero-dependency loop utility for running JS up to 3 parallel update types at configurable rate.",
   "main": "index.js",
   "engine": {
     "node": ">=10.7.0"

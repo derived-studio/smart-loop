@@ -1,14 +1,23 @@
-# GameLoop
+# SmartLoop
 
-GameLoop is a universal game loop for games written for modern JavaScript.
+Zero-dependency utility for running JS up to 3 parallel update methods at configurable rate.
+
+## Motivation
+
+Needed zero-dependency isomorphic game loop allowing running render and simulation updates at different configurable rate and support for deterministic lockstep networking.
 
 ## Features
 
-- Written in TypeScript (comes with definitions)
+### Generic features
+
+- Written in TypeScript (includes definitions)
 - Created using ES6 generators
-- Works in both browser and node environments
-- Uses `window.requestAnimationFrame()` when run in a browser
-- Uses `setImmediate()` and `setInterval` when run in Node
+- Can be run in both browser or Node
+- [Electron](https://www.electronjs.org/) and [NWJS](https://nwjs.io/) friendly
+- Supports up to 3 separate update method types `render()`, `update()`, `fixedUpdate()`
+  - Maximum 2 update methods when in Node `render()`
+- Exposes `render()` method build on the top of `requestAnimationFrame()`
+- Uses `setImmediate()` and `setTimeout` when in Node
 
 ## Usage
 
@@ -16,13 +25,12 @@ GameLoop is a universal game loop for games written for modern JavaScript.
 const update = () => { /* render code */ }
 const fixedUpdate = () => { /* physics code */ }
 
-const gameLoop = createGameLoop({ rate: 60, update, fixedRate: 30, fixedUpdate  })
+const loop = new SmartLoop({ rate: 60, update, fixedRate: 30, fixedUpdate  })
 
-gameLoop.start()
+loop.start()
 
-
-setTimeout(() => gameLoop.pause(), 2000)
-setTimeout(() => gameLoop.resume(), 3000)
+setTimeout(() => loop.pause(), 2000)
+setTimeout(() => loop.resume(), 3000)
 ```
 
 ## References

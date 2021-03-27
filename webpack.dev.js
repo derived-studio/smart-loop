@@ -10,7 +10,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'gameloop.js'
+    filename: 'index.js'
   },
 
   devServer: {

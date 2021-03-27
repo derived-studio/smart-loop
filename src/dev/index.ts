@@ -1,12 +1,12 @@
 import { isBrowser } from '../environment'
-import { GameLoop } from '../gameloop'
-import { LoopUpdateProps } from '../gameloop.types'
+import { SmartLoop } from '../updateloop'
+import { LoopUpdateProps } from '../updateloop.types'
 
 const render = (stats: LoopUpdateProps) => console.log(`[RENDER] - ${JSON.stringify(stats)}`)
 const update = (stats: LoopUpdateProps) => console.log(`[UPDATE] - ${JSON.stringify(stats)}`)
 const fixedUpdate = (stats: LoopUpdateProps) => console.log(`[FIXED] - ${JSON.stringify(stats)}`)
 
-const gameLoop = new GameLoop({
+const loop = new SmartLoop({
   duration: 4000,
   rate: 10,
   fixedRate: 10,
@@ -15,7 +15,7 @@ const gameLoop = new GameLoop({
   render: isBrowser ? render : null
 })
 
-gameLoop.start()
+loop.start()
 
-setTimeout(() => gameLoop.pause(), 2000)
-setTimeout(() => gameLoop.resume(), 3000)
+setTimeout(() => loop.pause(), 2000)
+setTimeout(() => loop.resume(), 3000)

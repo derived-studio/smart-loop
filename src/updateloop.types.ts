@@ -26,7 +26,7 @@ export type LoopOptions = {
   fixedUpdate?: UpdateFunction
 }
 
-export interface IGameLoop {
+export interface ILoop {
   pause: () => void
   resume: () => void
   start: () => void

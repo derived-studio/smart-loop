@@ -1,9 +1,9 @@
 import { isBrowser } from './environment'
 import { nextRenderFrame, nextUpdateFrame } from './frames'
-import { IGameLoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator } from './gameloop.types'
+import { ILoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator } from './updateloop.types'
 import { getHRTime } from './time'
 
-export class GameLoop implements IGameLoop {
+export class SmartLoop implements ILoop {
   private updateLoop: LoopGenerator | null
   private renderLoop: LoopGenerator | null
   private paused = false

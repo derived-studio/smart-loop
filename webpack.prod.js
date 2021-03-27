@@ -4,7 +4,7 @@ const webpack = require('webpack')
 const outputFileName = 'gameloop'
 module.exports = {
   mode: 'production',
-  entry: './src/gameloop.ts',
+  entry: './src/smartloop.ts',
   devtool: 'source-map',
 
   output: {
