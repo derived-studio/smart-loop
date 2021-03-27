@@ -7,7 +7,7 @@ export function getHRTime(): number {
     }
     if (isNodeJS) {
       const time = process.hrtime()
-      return time[0] * 1e9 + time[1]
+      return (time[0] * 1e9 + time[1]) / 1e6
     }
   } catch {
     return Date.now()

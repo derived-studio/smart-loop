@@ -8,7 +8,7 @@ export function nextUpdateFrame(timeout?: number): Promise<number> {
   })
 }
 
-export function nextDrawFrame(): Promise<number> {
+export function nextRenderFrame(): Promise<number> {
   return new Promise((resolve) => {
     requestAnimationFrame(resolve)
   })

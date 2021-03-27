@@ -1,40 +1,29 @@
-export type LoopGeneratorProps = {
-  duration?: number
-  rate: number
+export type LoopGenerator = AsyncGenerator<LoopUpdateProps, void, unknown>
+export type UpdateFunction = (stats: LoopUpdateProps) => void
+
+export enum LoopStatus {
+  Ready,
+  Running,
+  Paused,
+  Stopped,
+  Completed
 }
 
 export type LoopUpdateProps = {
-  gameTime: number
+  totalTime: number
   deltaTime: number
+  updateTime: number
   frame: number
+  fixed?: boolean
 }
 
-export type UpdateFunction = (stats: LoopUpdateProps) => void
-
-export type GameLoopProps = {
+export type LoopOptions = {
   rate?: number
   fixedRate?: number
   duration?: number
   update?: UpdateFunction
+  render?: UpdateFunction
   fixedUpdate?: UpdateFunction
-}
-
-export interface IGameLoopStats {
-  deltaTime: number
-  gameTime: number
-  frame: number
-  // done: boolean
-  // paused: boolean
-
-  /*
-  expires: number
-  rate: number
-  created: number
-  fixedUpdates: number
-  fixedRate: number
-  lastUpdate: number
-  lastFixedUpdate: number
-  */
 }
 
 export interface IGameLoop {
