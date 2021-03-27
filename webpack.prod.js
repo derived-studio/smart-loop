@@ -1,10 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const outputFileName = 'gameloop'
+const outputFileName = 'smart-loop'
 module.exports = {
   mode: 'production',
-  entry: './src/smartloop.ts',
+  entry: './src/smart-loop.ts',
   devtool: 'source-map',
 
   output: {
@@ -14,13 +14,13 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.css', '.scss']
+    extensions: ['.js', '.ts']
   },
 
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.ts?$/,
         use: [
           {
             loader: 'babel-loader',
@@ -33,44 +33,19 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: 'tsconfig.prod.json'
+              configFile: 'tsconfig.json'
             }
           }
         ]
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         use: ['babel-loader']
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          MiniCssExtractPlugin.loader, // Extract css to separate files
-          {
-            // Translates CSS into CommonJS
-            loader: 'css-loader',
-            options: {
-              modules: false,
-              sourceMap: false
-            }
-          },
-          {
-            // Compiles Sass to CSS
-            loader: 'sass-loader',
-            options: {
-              sourceMap: false,
-              implementation: require('sass')
-            }
-          }
-        ]
       }
     ]
   },
 
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: `${outputFileName}.css`
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })

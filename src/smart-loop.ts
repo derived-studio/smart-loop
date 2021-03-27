@@ -1,6 +1,6 @@
 import { isBrowser } from './environment'
 import { nextRenderFrame, nextUpdateFrame } from './frames'
-import { ILoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator } from './updateloop.types'
+import { ILoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator } from './smart-loop.types'
 import { getHRTime } from './time'
 
 export class SmartLoop implements ILoop {
