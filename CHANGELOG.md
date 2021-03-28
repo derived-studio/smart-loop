@@ -2,11 +2,12 @@
 
 <!--## Unreleased-->
 
-## Unreleased
+## 1.1.0
 
-- Fixed stop/start issues
-- Fixed invalid `deltaTime` values for `update()` and `fixedUpdate()`
-- Fixed negative `deltaTime` value fo `render()`
+- Added status getters.
+- Fixed stop/start issues.
+- Fixed invalid `deltaTime` values for `update()` and `fixedUpdate()`.
+- Fixed negative `deltaTime` value fo `render()`.
 
 ## 1.0.1
 
