@@ -1,29 +1,30 @@
 import { isBrowser } from './environment'
 import { nextRenderFrame, nextUpdateFrame } from './frames'
-import { ILoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator } from './smart-loop.types'
+import { ILoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator, LoopStatus } from './smart-loop.types'
 import { getHRTime } from './time'
 
 export class SmartLoop implements ILoop {
   private updateLoop: LoopGenerator | null
   private renderLoop: LoopGenerator | null
-  private paused = false
-  private status = false
-  public rate = 60
-  public fixedRate = 50
-  private duration = 0
+  private _status: LoopStatus
+  public rate: number
+  public fixedRate: number
+  private duration: number
 
   private render?: UpdateFunction
   private update?: UpdateFunction
   private fixedUpdate?: UpdateFunction
 
   constructor(opts: LoopOptions) {
-    const { render, update, fixedUpdate, rate, fixedRate, duration } = opts
+    const { render, update, fixedUpdate, rate = 50, fixedRate = 60, duration = 0 } = opts
 
     this.validateOptions(opts)
 
     this.rate = rate
     this.fixedRate = fixedRate
     this.duration = duration
+
+    this._status = LoopStatus.Ready
 
     if (update) {
       this.update = update
@@ -38,20 +39,42 @@ export class SmartLoop implements ILoop {
     }
   }
 
+  public set status(val: LoopStatus) {
+    this._status = val
+  }
+
+  public get status(): LoopStatus {
+    return this._status
+  }
+
+  public get isRunning(): boolean {
+    return this._status === LoopStatus.Running
+  }
+
+  public get isStopped(): boolean {
+    return this._status === LoopStatus.Stopped
+  }
+
+  public get isDone(): boolean {
+    return this._status === LoopStatus.Done
+  }
+
   public get isPaused(): boolean {
-    return this.paused
+    return this._status === LoopStatus.Paused
   }
 
   public pause(): void {
-    this.paused = true
+    this.status = LoopStatus.Paused
   }
 
   public resume(): void {
-    if (!this.updateLoop || !this.paused) {
-      return
+    if (this.isDone || this.isStopped) {
+      console.warn("Can't resume. Loop has been stopped or has finished. Start new loop.")
     }
 
-    this.paused = false
+    if (!this.isPaused) {
+      return
+    }
     this.start()
   }
 
@@ -60,6 +83,9 @@ export class SmartLoop implements ILoop {
       if (!this.renderLoop) {
         this.renderLoop = this.generateRenderLoop()
       }
+      if (!this.isRunning) {
+        this.status = LoopStatus.Running
+      }
       this.runLoop(this.renderLoop, this.render)
     }
 
@@ -67,12 +93,15 @@ export class SmartLoop implements ILoop {
       if (!this.updateLoop) {
         this.updateLoop = this.generateUpdateLoop()
       }
+      if (!this.isRunning) {
+        this.status = LoopStatus.Running
+      }
       this.runLoop(this.updateLoop, this.update, this.fixedUpdate)
     }
   }
 
   public stop(): void {
-    this.status = true
+    this.status = LoopStatus.Stopped
     this.updateLoop = null
   }
 
@@ -102,6 +131,10 @@ export class SmartLoop implements ILoop {
         totalTime,
         updateTime
       }
+    }
+
+    if (duration && updateTime - startTime >= duration) {
+      this._status === LoopStatus.Done
     }
   }
 
@@ -171,14 +204,14 @@ export class SmartLoop implements ILoop {
   }
 
   private async runLoop(loop: LoopGenerator, update: UpdateFunction, fixedUpdate?: UpdateFunction) {
+    this.status = LoopStatus.Running
     const { done, value } = await loop.next()
 
     if (done || !value) {
-      this.status = true
       return
     }
 
-    if (this.status || this.paused) {
+    if (!this.isRunning) {
       return
     }
 
