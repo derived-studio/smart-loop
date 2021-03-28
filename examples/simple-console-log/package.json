@@ -1,5 +1,6 @@
 {
   "name": "simple-console-log",
+  "author": "Mark Bevels <mark.bevels@derived.studio>",
   "private": true,
   "engine": {
     "node": ">=10.7.0"
@@ -7,7 +8,6 @@
   "scripts": {        
     "start": "webpack serve --config ./webpack.dev.js --progress --profile"
   },  
-  "author": "",  
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.13.10",
