@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added support for `setImmediate` when in Node environment
+- Docs updated
+
 ## 1.0.0
 
 ### Features

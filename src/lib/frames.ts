@@ -1,10 +1,13 @@
+import { isNodeJS } from './environment'
 import { getHRTime } from './time'
 
 export function nextUpdateFrame(timeout?: number): Promise<number> {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(getHRTime())
-    }, timeout)
+    if (!timeout && isNodeJS) {
+      setImmediate(() => resolve(getHRTime()))
+      return
+    }
+    setTimeout(() => resolve(getHRTime()), timeout)
   })
 }
 
