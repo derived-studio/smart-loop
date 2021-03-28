@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+<!--## Unreleased-->
+
+## 1.0.1
 
 - Added support for `setImmediate` when in Node environment.
 - Fixed running loop without `fixedUpdate`.
