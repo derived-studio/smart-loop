@@ -17,7 +17,7 @@ Needed zero-dependency isomorphic game loop allowing running render and simulati
 - Supports up to 3 separate update method types `render()`, `update()`, `fixedUpdate()`
   - Maximum 2 update methods when in Node `render()`
 - Exposes `render()` method build on the top of `requestAnimationFrame()`
-- Uses `setImmediate()` and `setTimeout` when in Node
+- Uses `setImmediate()` and `setTimeout()` when in Node
 
 ## Usage
 
