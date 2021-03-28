@@ -17,6 +17,10 @@ module.exports = {
     extensions: ['.js', '.ts']
   },
 
+  optimization: {
+    minimize: false
+  },
+
   module: {
     rules: [
       {
