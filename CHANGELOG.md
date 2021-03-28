@@ -10,7 +10,9 @@
 - Added `start()` / `stop()` methods
 - Added update `rate` option (default: `60`)
 - Added `fixedRate` for fixed update (default: `60`)
-- Added `render` based on `requestAnimationFrame` for browser environments
+- Added `update()` options called with `LoopUpdateProps`
+- Added `fixedUpdate()` options called with `LoopUpdateProps`
+- Added `render` based on `requestAnimationFrame` for browser evn
 - Added loop constructor options validation
 
 ### Package
