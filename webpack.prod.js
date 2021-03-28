@@ -1,10 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const outputFileName = 'smart-loop'
+const outputFileName = 'index'
 module.exports = {
   mode: 'production',
-  entry: './src/smart-loop.ts',
+  entry: './src/index.ts',
   devtool: 'source-map',
 
   output: {

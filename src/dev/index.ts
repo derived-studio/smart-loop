@@ -1,6 +1,6 @@
-import { isBrowser } from '../environment'
-import { SmartLoop } from '../smart-loop'
-import { LoopUpdateProps } from '../smart-loop.types'
+import { isBrowser } from '../lib/environment'
+import { SmartLoop } from '../lib/smart-loop'
+import { LoopUpdateProps } from '../lib/smart-loop.types'
 
 const render = (stats: LoopUpdateProps) => console.log(`[RENDER] - ${JSON.stringify(stats)}`)
 const update = (stats: LoopUpdateProps) => console.log(`[UPDATE] - ${JSON.stringify(stats)}`)
