@@ -110,7 +110,7 @@ export class SmartLoop implements ILoop {
   private async *generateRenderLoop() {
     const { _duration: duration } = this
 
-    const startTime = getHRTime()
+    const startTime = await nextRenderFrame()
 
     let totalTime = 0
     let updateTime = startTime

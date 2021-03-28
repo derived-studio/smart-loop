@@ -5,7 +5,8 @@
 ## Unreleased
 
 - Fixed stop/start issues
-- Fixed invalid `deltaTime`
+- Fixed invalid `deltaTime` values for `update()` and `fixedUpdate()`
+- Fixed negative `deltaTime` value fo `render()`
 
 ## 1.0.1
 
