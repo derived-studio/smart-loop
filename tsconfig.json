@@ -12,7 +12,6 @@
     "strictNullChecks": false,
     "sourceMap": true,
     "maxNodeModuleJsDepth": 0,
-    "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
 
