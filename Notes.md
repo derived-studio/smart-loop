@@ -18,5 +18,6 @@
 ## Todo
 
 - add test coverage
+- add support for custom date function
 - use https://swc.rs/ for ts compilation
 - crete example similar to: https://jsbin.com/gixibogoca/edit?html,js,output
