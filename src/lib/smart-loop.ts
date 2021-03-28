@@ -126,7 +126,7 @@ export class SmartLoop implements ILoop {
       deltaTime += frameDelta
       fixedDeltaTime += frameDelta
 
-      if (fixedDeltaTime > fixedFrameTime) {
+      if (this.fixedUpdate && fixedDeltaTime > fixedFrameTime) {
         fixedFrame += 1
         fixedDeltaTime = 0
         yield {
@@ -138,7 +138,7 @@ export class SmartLoop implements ILoop {
         }
       }
 
-      if (deltaTime > updateFrameTime) {
+      if (this.update && deltaTime > updateFrameTime) {
         frame += 1
         deltaTime = 0
         yield {
@@ -163,6 +163,10 @@ export class SmartLoop implements ILoop {
 
     if (fixedUpdate && fixedRate <= 0) {
       throw new Error(`Invalid fixedRate value ${fixedRate}. If defined it must be greater than zero.`)
+    }
+
+    if (!fixedUpdate && !update && !render) {
+      throw new Error('Ivanlid options due to missing render method.')
     }
   }
 
