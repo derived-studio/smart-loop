@@ -1,6 +1,6 @@
 {
   "name": "@derived/smart-loop",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Zero-dependency loop utility for running JS up to 3 parallel update types at configurable rate.",
   "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
