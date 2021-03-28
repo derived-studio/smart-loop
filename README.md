@@ -39,7 +39,7 @@ setTimeout(() => loop.resume(), 3000)
 
 - [High Resolution Time](https://www.w3.org/TR/hr-time) from [w3.org](https://www.w3.org)
 - [Game timers: Issues and solutions.](https://www.fabiensanglard.net/timer_and_framerate/index.php)
-- [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/)
+- [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/) by Glenn Fiedler
 - [Game loop](http://gameprogrammingpatterns.com/game-loop.html) from [Game Programming Patterns books](http://gameprogrammingpatterns.com/)
 - [A Modern C++ Game Loop Template (MIT)](https://www.reddit.com/r/gamedev/comments/41v2td/a_modern_c_game_loop_template_mit/) on Reddit
 
