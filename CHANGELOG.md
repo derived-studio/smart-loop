@@ -2,6 +2,11 @@
 
 <!--## Unreleased-->
 
+## Unreleased
+
+- Fixed stop/start issues
+- Fixed invalid `deltaTime`
+
 ## 1.0.1
 
 - Added support for `setImmediate` when in Node environment.

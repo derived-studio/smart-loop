@@ -2,11 +2,11 @@ export type LoopGenerator = AsyncGenerator<LoopUpdateProps, void, unknown>
 export type UpdateFunction = (stats: LoopUpdateProps) => void
 
 export enum LoopStatus {
-  Ready,
-  Running,
-  Paused,
-  Stopped,
-  Completed
+  Ready = 'ready',
+  Running = 'running',
+  Paused = 'paused',
+  Stopped = 'stopped',
+  Done = 'done'
 }
 
 export type LoopUpdateProps = {

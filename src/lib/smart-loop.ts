@@ -4,12 +4,13 @@ import { ILoop, LoopUpdateProps, LoopOptions, UpdateFunction, LoopGenerator, Loo
 import { getHRTime } from './time'
 
 export class SmartLoop implements ILoop {
-  private updateLoop: LoopGenerator | null
-  private renderLoop: LoopGenerator | null
+  private _updateLoop: LoopGenerator | null
+  private _renderLoop: LoopGenerator | null
   private _status: LoopStatus
+  private _duration: number
+
   public rate: number
   public fixedRate: number
-  private duration: number
 
   private render?: UpdateFunction
   private update?: UpdateFunction
@@ -22,7 +23,7 @@ export class SmartLoop implements ILoop {
 
     this.rate = rate
     this.fixedRate = fixedRate
-    this.duration = duration
+    this._duration = duration
 
     this._status = LoopStatus.Ready
 
@@ -80,33 +81,34 @@ export class SmartLoop implements ILoop {
 
   public start(): void {
     if (this.render) {
-      if (!this.renderLoop) {
-        this.renderLoop = this.generateRenderLoop()
+      if (!this._renderLoop) {
+        this._renderLoop = this.generateRenderLoop()
       }
       if (!this.isRunning) {
         this.status = LoopStatus.Running
       }
-      this.runLoop(this.renderLoop, this.render)
+      this.runLoop(this._renderLoop, this.render)
     }
 
     if (this.update || this.fixedUpdate) {
-      if (!this.updateLoop) {
-        this.updateLoop = this.generateUpdateLoop()
+      if (!this._updateLoop) {
+        this._updateLoop = this.generateUpdateLoop()
       }
       if (!this.isRunning) {
         this.status = LoopStatus.Running
       }
-      this.runLoop(this.updateLoop, this.update, this.fixedUpdate)
+      this.runLoop(this._updateLoop, this.update, this.fixedUpdate)
     }
   }
 
   public stop(): void {
     this.status = LoopStatus.Stopped
-    this.updateLoop = null
+    this._renderLoop = null
+    this._updateLoop = null
   }
 
   private async *generateRenderLoop() {
-    const { duration } = this
+    const { _duration: duration } = this
 
     const startTime = getHRTime()
 
@@ -139,13 +141,13 @@ export class SmartLoop implements ILoop {
   }
 
   private async *generateUpdateLoop() {
-    const { rate, duration, fixedRate } = this
+    const { rate, _duration: duration, fixedRate } = this
     const updateFrameTime = rate > 0 ? 1000 / rate : 0
     const fixedFrameTime = fixedRate > 0 ? 1000 / rate : 0
     const startTime = getHRTime()
 
-    let frame = 0
-    let fixedFrame = 0
+    let frame = 1
+    let fixedFrame = 1
     let totalTime = 0
     let updateTime = startTime
     let deltaTime = 0
@@ -160,8 +162,6 @@ export class SmartLoop implements ILoop {
       fixedDeltaTime += frameDelta
 
       if (this.fixedUpdate && fixedDeltaTime > fixedFrameTime) {
-        fixedFrame += 1
-        fixedDeltaTime = 0
         yield {
           frame: fixedFrame,
           deltaTime: fixedFrameTime,
@@ -169,17 +169,19 @@ export class SmartLoop implements ILoop {
           updateTime,
           fixed: true
         }
+        fixedFrame += 1
+        fixedDeltaTime = 0
       }
 
       if (this.update && deltaTime > updateFrameTime) {
-        frame += 1
-        deltaTime = 0
         yield {
           frame,
           deltaTime,
           totalTime,
           updateTime
         }
+        frame += 1
+        deltaTime = 0
       }
     }
   }
