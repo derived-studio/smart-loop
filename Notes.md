@@ -18,3 +18,4 @@
 ## Todo
 
 - use https://swc.rs/ for ts compilation
+- crete example similar to: https://jsbin.com/gixibogoca/edit?html,js,output
