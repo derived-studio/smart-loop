@@ -2,6 +2,10 @@
 
 <!--## Unreleased-->
 
+## 1.1.1
+
+- Added `prePublishOnly` script.
+
 ## 1.1.0
 
 - Added status getters.
