@@ -17,5 +17,9 @@ const loop = new SmartLoop({
 
 loop.start()
 
-setTimeout(() => loop.pause(), 2000)
-setTimeout(() => loop.resume(), 3000)
+setTimeout(() => loop.pause(), 1500)
+setTimeout(() => console.log('[ PAUSED ]'), 1501)
+setTimeout(() => loop.resume(), 2000)
+setTimeout(() => loop.stop(), 3000)
+setTimeout(() => console.log('[ STOPPED ]'), 3001)
+setTimeout(() => loop.start(), 3500)
