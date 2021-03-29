@@ -2,7 +2,7 @@
 
 <!--## Unreleased-->
 
-## Unreleased
+## 1.2.0
 
 - Distributed async frame functions (`nextUpdateFrame` and `nextRenderFrame`).
 - Added issues and changelog links to README.md.
