@@ -8,8 +8,6 @@ Needed zero-dependency isomorphic game loop allowing running render and simulati
 
 ## Features
 
-### Generic features
-
 - Written in TypeScript (includes definitions)
 - Created using ES6 generators
 - Can be run in both browser or Node
