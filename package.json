@@ -20,7 +20,7 @@
     "bc:hrtime": "node ./benchmark/hrtime",
     "bc:hrtime-bigint": "node ./benchmark/hrtime-bigint",
     "benchmark": "yarn bc:date-now && yarn bc:hrtime && yarn bc:hrtime-bigint",
-    "prepublishOnly": "yarn clean && yarn build"
+    "prepublishOnly": "yarn clean:build"
   },
   "repository": {
     "type": "git",
