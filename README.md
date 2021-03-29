@@ -2,6 +2,10 @@
 
 Zero-dependency utility for running JS up to 3 parallel update methods at configurable rate.
 
+📋 [Changelog](https://github.com/derived-studio/smart-loop/blob/main/README.md)
+·
+📢 [Issues and requests](https://github.com/derived-studio/smart-loop/issues)
+
 ## Motivation
 
 Needed zero-dependency isomorphic game loop allowing running render and simulation updates at different configurable rate and support for deterministic lockstep networking.

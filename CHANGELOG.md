@@ -5,6 +5,7 @@
 ## Unreleased
 
 - Distributed async frame functions (`nextUpdateFrame` and `nextRenderFrame`).
+- Added issues and changelog links to README.md.
 
 ## 1.1.1
 
