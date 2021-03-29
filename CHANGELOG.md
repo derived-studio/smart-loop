@@ -2,6 +2,10 @@
 
 <!--## Unreleased-->
 
+## Unreleased
+
+- Exporting async frame functions: `nextUpdateFrame` and `nextRenderFrame`.
+
 ## 1.1.1
 
 - Added `prePublishOnly` script.
