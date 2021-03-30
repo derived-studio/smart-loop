@@ -4,14 +4,17 @@
   "author": "Mark Bevels <mark.bevels@derived.studio>",
   "license": "MIT",
   "version": "1.2.0",
-  "main": "dist/index.min.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/smart-loop.js",            
+  "umd:main": "dist/smart-loop.umd.js",    
+  "module": "dist/smart-loop.m.js",        
+  "esmodule": "dist/smart-loop.modern.js", 
+  "types": "dist/smart-loop.d.ts",
   "engine": {
     "node": ">=10.7.0"
   },
   "scripts": {
     "compile": "tsc --p tsconfig.json",
-    "build": "webpack --config ./webpack.prod.js --progress --profile --stats minimal",
+    "build": "microbundle",
     "dev:node": "yarn ts-node src/dev/index.ts",
     "clean": "rimraf ./dist",
     "clean:build": "yarn clean && yarn build",
@@ -42,6 +45,7 @@
     "eslint": "^7.22.0",
     "eslint-webpack-plugin": "^2.5.3",
     "html-webpack-plugin": "^5.3.1",
+    "microbundle": "^0.13.0",
     "prettier": "^2.2.1",
     "rifraf": "^2.0.3",
     "ts-loader": "^8.0.18",

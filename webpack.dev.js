@@ -32,7 +32,9 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               babelrc: false,
-              cacheDirectory: true
+              cacheDirectory: true,
+              presets: ['@babel/typescript', '@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
             }
           }
         ],

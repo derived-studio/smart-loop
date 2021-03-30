@@ -2,6 +2,10 @@
 
 <!--## Unreleased-->
 
+## Unreleased
+
+- Replaced webpack production build with microbundle.
+
 ## 1.2.0
 
 - Distributed async frame functions (`nextUpdateFrame` and `nextRenderFrame`).
