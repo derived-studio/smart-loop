@@ -44,6 +44,7 @@ setTimeout(() => loop.resume(), 3000)
 - [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/) by Glenn Fiedler
 - [Game loop](http://gameprogrammingpatterns.com/game-loop.html) from [Game Programming Patterns books](http://gameprogrammingpatterns.com/)
 - [A Modern C++ Game Loop Template (MIT)](https://www.reddit.com/r/gamedev/comments/41v2td/a_modern_c_game_loop_template_mit/) on Reddit
+- [Anatomy of a video game](https://developer.mozilla.org/en-US/docs/Games/Anatomy)
 
 ### GDC Talks
 
@@ -52,4 +53,5 @@ setTimeout(() => loop.resume(), 3000)
 
 ### Libraries
 
-- [node-microtime](https://github.com/wadey/node-microtime) (benchmark [gist](https://gist.github.com/fengmk2/4345606))
+- [wadey/node-microtime](https://github.com/wadey/node-microtime) (benchmark [gist](https://gist.github.com/fengmk2/4345606))
+- [norlin/node-gameloop](https://github.com/norlin/node-gameloop/blob/master/lib/gameloop.js)
